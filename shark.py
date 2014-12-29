@@ -11,7 +11,21 @@
 '''
 
 class Shark:
+    'Predators of Wa-Tor'
+    count = 0
+
     def __init__(self, name):
+        self.symbol = '^'
         self.name = name
         self.energy = 10
         self.libido = 4
+        Shark.count += 1
+
+    def showStats(self):
+        print(self.name, self.libido, self.energy)
+
+    #def reproduce(self):
+        # Reproduction
+
+    #def move(self):
+        # Behavior

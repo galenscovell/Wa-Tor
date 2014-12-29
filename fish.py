@@ -6,7 +6,21 @@
     fish in its old position. Its reproduction time is also reset to zero.
 '''
 
-class Fish():
+class Fish:
+    'Peaceful denizens of Wa-Tor'
+    count = 0
+
     def __init__(self, name):
+        self.symbol = '@'
         self.name = name
         self.libido = 3
+        Fish.count += 1
+
+    def showStats(self):
+        print(self.name, self.libido)
+
+    #def reproduce(self):
+        # Reproduction
+
+    #def move(self):
+        # Behavior
