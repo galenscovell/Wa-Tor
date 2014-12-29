@@ -14,15 +14,12 @@ class Shark:
     'Predators of Wa-Tor'
     count = 0
 
-    def __init__(self, name):
-        self.symbol = '^'
-        self.name = name
+    def __init__(self, x, y):
         self.energy = 10
         self.libido = 4
         Shark.count += 1
-
-    def showStats(self):
-        print(self.name, self.libido, self.energy)
+        self.x = x
+        self.y = y
 
     #def reproduce(self):
         # Reproduction

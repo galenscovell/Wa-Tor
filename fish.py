@@ -10,14 +10,9 @@ class Fish:
     'Peaceful denizens of Wa-Tor'
     count = 0
 
-    def __init__(self, name):
-        self.symbol = '@'
-        self.name = name
+    def __init__(self):
         self.libido = 3
         Fish.count += 1
-
-    def showStats(self):
-        print(self.name, self.libido)
 
     #def reproduce(self):
         # Reproduction
