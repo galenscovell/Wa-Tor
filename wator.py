@@ -7,26 +7,25 @@
 
 from shark import *
 from fish import *
-from creature import *
 import random
 import pygame
 
 
 # Color setup
-BACKGROUND  = ( 52,  73,  94)
-OCEAN       = ( 52, 152, 219)
-FISH        = ( 46, 204, 113)
-SHARK       = (230, 126,  34)
+BACKGROUND  = ( 62,  70,  73)
+OCEAN       = ( 47,  47,  49)
+FISH        = ( 34, 168, 109)
+SHARK       = (233, 110,  68)
 DEATH       = (231,  76,  60)
-SPAWN       = (236, 240, 241)
+SPAWN       = (240, 240, 240)
 
 # Window settings
 pygame.init()
-screen_size = [800, 600]
+screen_size = [800, 500]
 screen = pygame.display.set_mode(screen_size)
-block_width = 6
-block_height = 6
-block_margin = 1
+block_width = 30
+block_height = 30
+block_margin = 6
 pygame.display.set_caption("Population Dynamics | Wa-Tor")
 
 
@@ -42,8 +41,8 @@ class World:
     def spawnCreature(self, grid, creature_type):
         spawned = False
         while spawned == False:
-            pos_x = random.randint(0, 79)
-            pos_y = random.randint(0, 99)
+            pos_x = random.randint(0, 9)
+            pos_y = random.randint(0, 9)
             if grid[pos_x][pos_y] == 0:
                 spawned = True
         if creature_type == "shark":
@@ -52,12 +51,11 @@ class World:
         else:
             grid[pos_x][pos_y] = 2
             fish = Fish(pos_x, pos_y)
-        print(Creature.count, Shark.count, Fish.count)
 
 
     def updateWorld(self, grid):
-        for row in range(80):
-            for column in range(100):
+        for row in range(10):
+            for column in range(10):
                 if grid[row][column] == 1:
                     color = SHARK
                 elif grid[row][column] == 2:
@@ -69,9 +67,9 @@ class World:
 
     def createWorld(self):
         grid = []
-        for row in range(80):
+        for row in range(10):
             grid.append([])
-            for column in range(100):
+            for column in range(10):
                 grid[row].append(0)
         return grid
         
@@ -81,34 +79,40 @@ class World:
 def main():
 
     # World creation variables (chronons, sharks, fish)
-    world = World(100, 100, 200)
+    world = World(200, 3, 6)
 
-    loop = True
     world_created = False
     clock = pygame.time.Clock()
+    chronons = world.lifespan
 
-    while loop:
+    while chronons > 0:
         while not world_created:
             screen.fill(BACKGROUND)
             created_world = world.createWorld()
+            for s in range(world.shark_population):
+                    world.spawnCreature(created_world, "shark")
+            for f in range(world.fish_population):
+                    world.spawnCreature(created_world, "fish")
             world_created = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                loop = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    for s in range(world.shark_population):
-                        world.spawnCreature(created_world, "shark")
-                    for f in range(world.fish_population):
-                        world.spawnCreature(created_world, "fish")
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                # Change screen coordinates to cartesian
+                column, row = pos[0], pos[1]
+                cart_coords = "(" + str(row) + ", " + str(column) + ")"
+                print("Screen:", pos, "Grid: " + cart_coords)
 
 
+        for fish in Fish.instances:
+            fish.movement(created_world)
         world.updateWorld(created_world)
         pygame.display.flip()
-        clock.tick(5)
-
-    pygame.quit()
+        clock.tick(10)
+        chronons -= 1
 
 
 if __name__ == "__main__":

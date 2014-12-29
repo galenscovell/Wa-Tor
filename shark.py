@@ -11,15 +11,15 @@
 '''
 
 from creature import *
+import random
 
-class Shark(Creature):
+class Shark():
     'Predators of Wa-Tor'
     count = 0
 
     def __init__(self, x, y):
-        self.energy = 10
-        self.libido = 4
+        self.energy = random.randint(1, 10)
+        self.libido = random.randint(0, 4)
         Shark.count += 1
         self.x = x
         self.y = y
-        Creature.plus(self)
