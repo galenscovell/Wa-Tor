@@ -10,7 +10,9 @@
     exactly the same way as the fish.
 '''
 
-class Shark:
+from creature import *
+
+class Shark(Creature):
     'Predators of Wa-Tor'
     count = 0
 
@@ -20,9 +22,4 @@ class Shark:
         Shark.count += 1
         self.x = x
         self.y = y
-
-    #def reproduce(self):
-        # Reproduction
-
-    #def move(self):
-        # Behavior
+        Creature.plus(self)

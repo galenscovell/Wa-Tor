@@ -6,16 +6,13 @@
     fish in its old position. Its reproduction time is also reset to zero.
 '''
 
-class Fish:
+from creature import *
+
+class Fish(Creature):
     'Peaceful denizens of Wa-Tor'
     count = 0
 
-    def __init__(self):
+    def __init__(self, x, y):
         self.libido = 3
         Fish.count += 1
-
-    #def reproduce(self):
-        # Reproduction
-
-    #def move(self):
-        # Behavior
+        Creature.plus(self)
