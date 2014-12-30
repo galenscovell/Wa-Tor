@@ -13,13 +13,42 @@
 from creature import *
 import random
 
-class Shark():
+class Shark(Creature):
     'Predators of Wa-Tor'
     count = 0
+    instances = []
 
     def __init__(self, x, y):
-        self.energy = random.randint(1, 10)
-        self.libido = random.randint(0, 4)
+        self.energy = random.randint(4, 10)
+        self.libido = 0
         Shark.count += 1
         self.x = x
         self.y = y
+        Shark.instances.append(self)
+
+    def check_status(self, grid):
+        if grid[self.x][self.y] == 3:
+            grid[self.x][self.y] = 2
+            self.energy += 3
+
+        #if self.energy <= 0:
+            #grid[self.x][self.y] = 0
+            #Shark.instances.remove(self)
+
+        elif self.libido >= 6:
+            self.libido = 0
+
+    def new_location(self, grid, column_change, row_change):
+        new_column = self.x + column_change
+        new_row = self.y + row_change
+        if grid[new_column][new_row] == 0:
+            grid[new_column][new_row] = 2
+            grid[self.x][self.y] = 0
+            self.x = new_column
+            self.y = new_row
+            return True
+        else:
+            return False
+
+    #def check_prey(self, grid):
+    

@@ -12,19 +12,19 @@ import pygame
 
 
 # Color setup
-BACKGROUND  = ( 62,  70,  73)
-OCEAN       = ( 47,  47,  49)
-FISH        = ( 34, 168, 109)
-SHARK       = (233, 110,  68)
-DEATH       = (231,  76,  60)
-SPAWN       = (240, 240, 240)
+BACKGROUND = ( 62,  70,  73)
+OCEAN      = ( 47,  47,  49)
+FISH       = ( 34, 168, 109)
+SHARK      = (233, 110,  68)
+DEATH      = (231,  76,  60)
+SPAWN      = (240, 240, 240)
 
 # Window settings
 pygame.init()
-screen_size = [800, 500]
+screen_size = [500, 500]
 screen = pygame.display.set_mode(screen_size)
-block_width = 30
-block_height = 30
+block_width = 20
+block_height = 20
 block_margin = 6
 pygame.display.set_caption("Population Dynamics | Wa-Tor")
 
@@ -37,7 +37,6 @@ class World:
         self.shark_population = s_pop
         self.fish_population = f_pop
 
-
     def spawnCreature(self, grid, creature_type):
         spawned = False
         while spawned == False:
@@ -45,25 +44,23 @@ class World:
             pos_y = random.randint(0, 9)
             if grid[pos_x][pos_y] == 0:
                 spawned = True
-        if creature_type == "shark":
+        if creature_type == "fish":
             grid[pos_x][pos_y] = 1
-            shark = Shark(pos_x, pos_y)
+            fish = Fish(pos_x, pos_y)
         else:
             grid[pos_x][pos_y] = 2
-            fish = Fish(pos_x, pos_y)
-
+            shark = Shark(pos_x, pos_y)
 
     def updateWorld(self, grid):
         for row in range(10):
             for column in range(10):
                 if grid[row][column] == 1:
-                    color = SHARK
-                elif grid[row][column] == 2:
                     color = FISH
+                elif grid[row][column] == 2:
+                    color = SHARK
                 else:
                     color = OCEAN
                 pygame.draw.rect(screen, color, [(block_margin + block_width) * column + block_margin, (block_margin + block_height) * row + block_margin, block_width, block_height])
-
 
     def createWorld(self):
         grid = []
@@ -79,39 +76,39 @@ class World:
 def main():
 
     # World creation variables (chronons, sharks, fish)
-    world = World(200, 3, 6)
+    world = World(50, 5, 10)
 
     world_created = False
     clock = pygame.time.Clock()
     chronons = world.lifespan
 
+
+    # World and creature creation
+    while not world_created:
+        screen.fill(BACKGROUND)
+        created_world = world.createWorld()
+        for s in range(world.shark_population):
+                world.spawnCreature(created_world, "shark")
+        for f in range(world.fish_population):
+                world.spawnCreature(created_world, "fish")
+        world_created = True
+
+    # Simulation loop
     while chronons > 0:
-        while not world_created:
-            screen.fill(BACKGROUND)
-            created_world = world.createWorld()
-            for s in range(world.shark_population):
-                    world.spawnCreature(created_world, "shark")
-            for f in range(world.fish_population):
-                    world.spawnCreature(created_world, "fish")
-            world_created = True
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                # Change screen coordinates to cartesian
-                column, row = pos[0], pos[1]
-                cart_coords = "(" + str(row) + ", " + str(column) + ")"
-                print("Screen:", pos, "Grid: " + cart_coords)
-
-
         for fish in Fish.instances:
             fish.movement(created_world)
+            fish.libido += 1
+        for shark in Shark.instances:
+            shark.movement(created_world)
+            shark.libido += 1
+            shark.energy -= 1
+        #for fish in Fish.instances:
+            #fish.check_status(created_world)
+        #for shark in Shark.instances:
+            #shark.check_status(created_world)
         world.updateWorld(created_world)
         pygame.display.flip()
-        clock.tick(10)
+        clock.tick(2)
         chronons -= 1
 
 
