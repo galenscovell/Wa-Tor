@@ -5,8 +5,8 @@
     opposite side. The sharks are predatory and eat the fish. 
 '''
 
-from shark import *
-from fish import *
+from fish import Fish
+from shark import Shark
 import random
 import pygame
 
@@ -32,23 +32,24 @@ pygame.display.set_caption("Population Dynamics | Wa-Tor")
 class World:
     'The torus-shaped world of Wa-Tor'
 
-    def __init__(self, lifespan, s_pop, f_pop):
+    def __init__(self, lifespan, f_pop, s_pop):
         self.lifespan = lifespan
-        self.shark_population = s_pop
         self.fish_population = f_pop
+        self.shark_population = s_pop
 
     def spawnCreature(self, grid, creature_type):
         spawned = False
         while spawned == False:
             pos_x = random.randint(0, 9)
             pos_y = random.randint(0, 9)
-            if grid[pos_x][pos_y] == 0:
+            spawn_pos = grid[pos_x][pos_y]
+            if spawn_pos == 0:
                 spawned = True
         if creature_type == "fish":
-            grid[pos_x][pos_y] = 1
+            spawn_pos = 1
             fish = Fish(pos_x, pos_y)
         else:
-            grid[pos_x][pos_y] = 2
+            spawn_pos = 2
             shark = Shark(pos_x, pos_y)
 
     def updateWorld(self, grid):
@@ -60,7 +61,10 @@ class World:
                     color = SHARK
                 else:
                     color = OCEAN
-                pygame.draw.rect(screen, color, [(block_margin + block_width) * column + block_margin, (block_margin + block_height) * row + block_margin, block_width, block_height])
+                pygame.draw.rect(screen, color, 
+                    [(block_margin + block_width) * column + block_margin, 
+                    (block_margin + block_height) * row + block_margin, 
+                    block_width, block_height])
 
     def createWorld(self):
         grid = []
@@ -75,42 +79,50 @@ class World:
 
 def main():
 
-    # World creation variables (chronons, sharks, fish)
-    world = World(50, 5, 10)
-
-    world_created = False
+    # World creation variables (chronons, fish, sharks)
+    world = World(200, 1, 2)
     clock = pygame.time.Clock()
     chronons = world.lifespan
 
-
     # World and creature creation
+    world_created = False
     while not world_created:
         screen.fill(BACKGROUND)
-        created_world = world.createWorld()
-        for s in range(world.shark_population):
-                world.spawnCreature(created_world, "shark")
+        new_world = world.createWorld()
         for f in range(world.fish_population):
-                world.spawnCreature(created_world, "fish")
+                world.spawnCreature(new_world, "fish")
+        for s in range(world.shark_population):
+                world.spawnCreature(new_world, "shark")
         world_created = True
 
-    # Simulation loop
-    while chronons > 0:
-        for fish in Fish.instances:
-            fish.movement(created_world)
-            fish.libido += 1
-        for shark in Shark.instances:
-            shark.movement(created_world)
-            shark.libido += 1
-            shark.energy -= 1
-        #for fish in Fish.instances:
-            #fish.check_status(created_world)
-        #for shark in Shark.instances:
-            #shark.check_status(created_world)
-        world.updateWorld(created_world)
-        pygame.display.flip()
-        clock.tick(2)
-        chronons -= 1
+    # Main loop
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONUP:
+                None
 
+        # Simulation loop
+        while chronons > 0:
+            for fish in Fish.instances:
+                fish.movement(new_world)
+                fish.libido += 1
+                fish.energy -= 1
+            for shark in Shark.instances:
+                shark.movement(new_world)
+                shark.libido += 1
+                shark.energy -= 1
+            world.updateWorld(new_world)
+            pygame.display.flip()
+            clock.tick(8)
+            chronons -= 1
+
+        clock.tick(30)
+
+    pygame.quit()
+    quit()
 
 if __name__ == "__main__":
     main()
