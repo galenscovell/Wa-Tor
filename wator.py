@@ -1,9 +1,3 @@
-'''
-1. Wa-Tor is usually implemented as a 2-dimensional grid with 3 colours, 
-    one for fish, one for sharks and one for empty water. 
-2. If a creature moves past the edge of the grid, it reappears on the 
-    opposite side. The sharks are predatory and eat the fish. 
-'''
 
 from creature import Creature
 from fish import Fish
@@ -98,7 +92,7 @@ def main(args):
 
         if chronons > 0:
             for creature in Creature.instances:
-                creature.movement(new_world)
+                creature.check_status(new_world)
             world.updateWorld(new_world)
             chronons -= 1
 
@@ -110,8 +104,8 @@ def main(args):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
-    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 1, type = int)
-    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: )", default = 1, type = int)
+    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 20, type = int)
+    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: )", default = 0, type = int)
     parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: )", default = 0, type = int)
     args = parser.parse_args()
     return args
