@@ -10,7 +10,7 @@ Requirements:
 * PyGame 1.9.2a0
 
 Usage: 
-* python wator.py [-h] [-c NUM_CHRONONS] [-f NUM_FISH] [-s NUM_SHARKS] [-fps FRAMERATE]
+<blockquote><b>python wator.py</b> [<i>-h</i>] [<i>-c NUM_CHRONONS</i>] [<i>-f NUM_FISH</i>] [<i>-s NUM_SHARKS</i>] [<i>-fps FRAMERATE</i>]</blockquote>
 
 Arguments:
 *  -h, --help 
