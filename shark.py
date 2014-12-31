@@ -7,8 +7,8 @@ class Shark(Creature):
 
     def __init__(self, x, y):
         self.handler = 2
-        self.libido = 0.0
-        self.energy = 10
+        self.libido = 0
+        self.energy = 12
         self.x = x
         self.y = y
         Creature.instances.append(self)
