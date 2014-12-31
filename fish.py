@@ -11,7 +11,3 @@ class Fish(Creature):
         self.x = x
         self.y = y
         Creature.instances.append(self)
-
-    def fish_checks(self):
-        self.libido += 1
-    

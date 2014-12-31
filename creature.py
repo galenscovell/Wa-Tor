@@ -16,11 +16,18 @@ class Creature():
 
     def movement(self, grid):
         open_spaces = self.check_adjacent_cells(grid)
-        possible_spots = [k for k,v in open_spaces.items() if v == 0]
-        choice = random.randint(0, len(possible_spots) - 1)
-        new_x = possible_spots[choice][0]
-        new_y = possible_spots[choice][1]
-        if self.libido == 8:
+        if self.handler == 2:
+            nearby_fish = [k for k,v in open_spaces.items() if v == 1]
+            if len(nearby_fish) > 0:
+                move_options = nearby_fish
+            else:
+                move_options = [k for k,v in open_spaces.items() if v == 0]
+        elif self.handler == 1:
+            move_options = [k for k,v in open_spaces.items() if v == 0]
+        choice = random.randint(0, len(move_options) - 1)
+        new_x = move_options[choice][0]
+        new_y = move_options[choice][1]
+        if self.libido == 10:
             grid[self.x][self.y] = self.handler
             self.__module__ = type(self)(self.x, self.y)
         else:
@@ -35,11 +42,14 @@ class Creature():
                 grid[self.x][self.y] = 0
                 Creature.instances.remove(self)
             else:
-                self.energy -= 1
-                self.libido += 0.5
+                #self.energy -= 1
+                #self.libido += 0.5
                 self.movement(grid)
         elif self.__class__.__name__ == 'Fish':
-            self.fish_checks()
-            self.movement(grid)
+            if grid[self.x][self.y] == 2:
+                Creature.instances.remove(self)
+            else:
+                self.libido += 1
+                self.movement(grid)
 
 

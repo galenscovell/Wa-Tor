@@ -97,16 +97,17 @@ def main(args):
             chronons -= 1
 
         pygame.display.flip()
-        clock.tick(8)
+        clock.tick(args.framerate)
 
     pygame.quit()
     quit()
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
-    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 20, type = int)
-    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: )", default = 0, type = int)
-    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: )", default = 0, type = int)
+    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 100, type = int)
+    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 6)", default = 6, type = int)
+    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 2)", default = 2, type = int)
+    parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 8)", default = 8, type = int)
     args = parser.parse_args()
     return args
 
