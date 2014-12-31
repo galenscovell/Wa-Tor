@@ -15,11 +15,11 @@ SHARK      = (233, 110,  68)
 
 # Window settings
 pygame.init()
-CELLSIZE = 10
-MARGIN = 2
-HEIGHT = 40
-WIDTH = 40
-screen_size = [480, 480]
+CELLSIZE = 9
+MARGIN = 1
+HEIGHT = 50
+WIDTH = 50
+screen_size = [500, 500]
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Population Dynamics | Wa-Tor")
 

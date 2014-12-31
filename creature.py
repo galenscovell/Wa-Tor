@@ -1,7 +1,7 @@
 
 import random
-HEIGHT = 40
-WIDTH = 40
+HEIGHT = 50
+WIDTH = 50
 
 class Creature():
     'Base class for all creatures of Wa-tor'
