@@ -5,10 +5,12 @@
     opposite side. The sharks are predatory and eat the fish. 
 '''
 
+from creature import Creature
 from fish import Fish
 from shark import Shark
 import random
 import pygame
+import argparse
 
 
 # Color setup
@@ -16,113 +18,103 @@ BACKGROUND = ( 62,  70,  73)
 OCEAN      = ( 47,  47,  49)
 FISH       = ( 34, 168, 109)
 SHARK      = (233, 110,  68)
-DEATH      = (231,  76,  60)
-SPAWN      = (240, 240, 240)
 
 # Window settings
 pygame.init()
+CELLSIZE = 20
+MARGIN = 2
+HEIGHT = 20
+WIDTH = 20
 screen_size = [500, 500]
 screen = pygame.display.set_mode(screen_size)
-block_width = 20
-block_height = 20
-block_margin = 6
 pygame.display.set_caption("Population Dynamics | Wa-Tor")
 
 
 class World:
     'The torus-shaped world of Wa-Tor'
 
-    def __init__(self, lifespan, f_pop, s_pop):
-        self.lifespan = lifespan
-        self.fish_population = f_pop
-        self.shark_population = s_pop
-
     def spawnCreature(self, grid, creature_type):
         spawned = False
         while spawned == False:
-            pos_x = random.randint(0, 9)
-            pos_y = random.randint(0, 9)
-            spawn_pos = grid[pos_x][pos_y]
-            if spawn_pos == 0:
+            x = random.randint(0, HEIGHT - 1)
+            y = random.randint(0, WIDTH - 1)
+            if grid[x][y] == 0:
                 spawned = True
         if creature_type == "fish":
-            spawn_pos = 1
-            fish = Fish(pos_x, pos_y)
-        else:
-            spawn_pos = 2
-            shark = Shark(pos_x, pos_y)
+            grid[x][y] = 1
+            fish = Fish(x, y)
+        elif creature_type == "shark":
+            grid[x][y] = 2
+            shark = Shark(x, y)
 
     def updateWorld(self, grid):
-        for row in range(10):
-            for column in range(10):
-                if grid[row][column] == 1:
+        for y in range(0, HEIGHT):
+            for x in range(0, WIDTH):
+                if grid[y][x] == 1:
                     color = FISH
-                elif grid[row][column] == 2:
+                elif grid[y][x] == 2 or grid[y][x] == 3:
                     color = SHARK
                 else:
                     color = OCEAN
                 pygame.draw.rect(screen, color, 
-                    [(block_margin + block_width) * column + block_margin, 
-                    (block_margin + block_height) * row + block_margin, 
-                    block_width, block_height])
+                    [(MARGIN + CELLSIZE) * x + MARGIN, 
+                    (MARGIN + CELLSIZE) * y + MARGIN, 
+                    CELLSIZE, CELLSIZE])
 
     def createWorld(self):
         grid = []
-        for row in range(10):
+        for y in range(0, HEIGHT):
             grid.append([])
-            for column in range(10):
-                grid[row].append(0)
+            for x in range(0, WIDTH):
+                grid[y].append(0)
         return grid
         
 
 
 
-def main():
+def main(args):
 
-    # World creation variables (chronons, fish, sharks)
-    world = World(200, 1, 2)
+    world = World()
     clock = pygame.time.Clock()
-    chronons = world.lifespan
+    chronons = args.num_chronons
 
-    # World and creature creation
     world_created = False
     while not world_created:
         screen.fill(BACKGROUND)
         new_world = world.createWorld()
-        for f in range(world.fish_population):
+        for f in range(args.num_fish):
                 world.spawnCreature(new_world, "fish")
-        for s in range(world.shark_population):
+        for s in range(args.num_sharks):
                 world.spawnCreature(new_world, "shark")
         world_created = True
 
-    # Main loop
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONUP:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 None
 
-        # Simulation loop
-        while chronons > 0:
-            for fish in Fish.instances:
-                fish.movement(new_world)
-                fish.libido += 1
-                fish.energy -= 1
-            for shark in Shark.instances:
-                shark.movement(new_world)
-                shark.libido += 1
-                shark.energy -= 1
+        if chronons > 0:
+            for creature in Creature.instances:
+                creature.movement(new_world)
             world.updateWorld(new_world)
-            pygame.display.flip()
-            clock.tick(8)
             chronons -= 1
 
-        clock.tick(30)
+        pygame.display.flip()
+        clock.tick(8)
 
     pygame.quit()
     quit()
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
+    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 1, type = int)
+    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: )", default = 1, type = int)
+    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: )", default = 0, type = int)
+    args = parser.parse_args()
+    return args
+
 if __name__ == "__main__":
-    main()
+    main(parse_arguments())
