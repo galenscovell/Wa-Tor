@@ -17,9 +17,9 @@ SHARK      = (233, 110,  68)
 pygame.init()
 CELLSIZE = 10
 MARGIN = 2
-HEIGHT = 30
-WIDTH = 30
-screen_size = [500, 500]
+HEIGHT = 40
+WIDTH = 40
+screen_size = [480, 480]
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Population Dynamics | Wa-Tor")
 
@@ -46,7 +46,7 @@ class World:
             for x in range(0, WIDTH):
                 if grid[y][x] == 1:
                     color = FISH
-                elif grid[y][x] == 2 or grid[y][x] == 3:
+                elif grid[y][x] == 2:
                     color = SHARK
                 else:
                     color = OCEAN
@@ -104,10 +104,10 @@ def main(args):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
-    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 100)", default = 100, type = int)
-    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 6)", default = 6, type = int)
-    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 2)", default = 2, type = int)
-    parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 8)", default = 8, type = int)
+    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 200)", default = 200, type = int)
+    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 20)", default = 20, type = int)
+    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 10)", default = 10, type = int)
+    parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 10)", default = 10, type = int)
     args = parser.parse_args()
     return args
 

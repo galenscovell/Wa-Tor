@@ -1,6 +1,5 @@
 
 from creature import Creature
-import random
 
 class Fish(Creature):
     'Peaceful denizens of Wa-Tor'

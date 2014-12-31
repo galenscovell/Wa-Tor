@@ -1,7 +1,7 @@
 
 import random
-HEIGHT = 30
-WIDTH = 30
+HEIGHT = 40
+WIDTH = 40
 
 class Creature():
     'Base class for all creatures of Wa-tor'
@@ -10,13 +10,18 @@ class Creature():
     def check_adjacent_cells(self, grid):
         results = {}
         for x, y in [(self.x + i, self.y + j) for i in (-1, 0, 1) for j in (-1, 0, 1) if i != 0 or j != 0]:
-                if (0 <= x <= WIDTH - 1) and (0 <= y <= HEIGHT - 1):
+                if (0 <= x < HEIGHT) and (0 <= y <= WIDTH):
+                    # Allow wrap-around on horizontal axis
+                    if y == WIDTH:
+                        y = 0
                     results[x,y] = grid[x][y]
         return results
 
     def movement(self, grid):
         moved = False
         open_spaces = self.check_adjacent_cells(grid)
+
+        # Shark behavior
         if self.handler == 2:
             nearby_fish = [k for k,v in open_spaces.items() if v == 1]
             if len(nearby_fish) > 0:
@@ -24,6 +29,8 @@ class Creature():
                 self.energy += 4
             else:
                 move_options = [k for k,v in open_spaces.items() if v == 0]
+
+        # Fish behavior
         elif self.handler == 1:
             move_options = [k for k,v in open_spaces.items() if v == 0]
 
@@ -44,6 +51,7 @@ class Creature():
             moved = True
 
     def check_status(self, grid):
+        # Check each shark status
         if self.__class__.__name__ == 'Shark':
             if self.energy == 0:
                 grid[self.x][self.y] = 0
@@ -52,6 +60,8 @@ class Creature():
                 self.energy -= 1
                 self.libido += 1
                 self.movement(grid)
+
+        # Check each fish status
         elif self.__class__.__name__ == 'Fish':
             if grid[self.x][self.y] == 2:
                 Creature.instances.remove(self)

@@ -1,6 +1,5 @@
 
 from creature import Creature
-import random
 
 class Shark(Creature):
     'Predators of Wa-Tor'
