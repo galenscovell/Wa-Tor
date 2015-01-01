@@ -26,7 +26,8 @@ class Creature():
             nearby_fish = [k for k,v in open_spaces.items() if v == 1]
             if len(nearby_fish) > 0:
                 move_options = nearby_fish
-                self.energy += 4
+                self.energy += 1
+                self.libido += 1
             else:
                 move_options = [k for k,v in open_spaces.items() if v == 0]
 
@@ -40,7 +41,8 @@ class Creature():
             choice = random.randint(0, len(move_options) - 1)
             new_x = move_options[choice][0]
             new_y = move_options[choice][1]
-            if self.libido == 10:
+            if self.libido >= 12:
+                self.libido = 0
                 grid[self.x][self.y] = self.handler
                 self.__module__ = type(self)(self.x, self.y)
             else:
@@ -53,12 +55,11 @@ class Creature():
     def check_status(self, grid):
         # Check each shark status
         if self.__class__.__name__ == 'Shark':
-            if self.energy == 0:
+            if self.energy <= 0:
                 grid[self.x][self.y] = 0
                 Creature.instances.remove(self)
             else:
                 self.energy -= 1
-                self.libido += 1
                 self.movement(grid)
 
         # Check each fish status
@@ -66,7 +67,7 @@ class Creature():
             if grid[self.x][self.y] == 2:
                 Creature.instances.remove(self)
             else:
-                self.libido += 2
+                self.libido += 3
                 self.movement(grid)
 
 
