@@ -106,7 +106,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
     parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 1000)", default = 1000, type = int)
     parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 30)", default = 30, type = int)
-    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 10)", default = 10, type = int)
+    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 20)", default = 20, type = int)
     parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 10)", default = 10, type = int)
     args = parser.parse_args()
     return args

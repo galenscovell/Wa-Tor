@@ -10,10 +10,12 @@ class Creature():
     def check_adjacent_cells(self, grid):
         results = {}
         for x, y in [(self.x + i, self.y + j) for i in (-1, 0, 1) for j in (-1, 0, 1) if i != 0 or j != 0]:
-                if (0 <= x < HEIGHT) and (0 <= y <= WIDTH):
+                if (0 <= x < HEIGHT):
                     # Allow wrap-around on horizontal axis
                     if y == WIDTH:
                         y = 0
+                    elif y < 0:
+                        y = WIDTH - 1
                     results[x,y] = grid[x][y]
         return results
 
