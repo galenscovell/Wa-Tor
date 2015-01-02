@@ -16,10 +16,10 @@ Arguments:
 *  -h, --help 
 <blockquote> Show this help message and exit </blockquote>
 *  -c, --num_chronons 
-<blockquote> Runtime length. (Default: 200) </blockquote>
+<blockquote> Runtime length. (Default: 1000) </blockquote>
 *  -f, --num_fish 
-<blockquote> Number of fish. (Default: 20) </blockquote>
+<blockquote> Number of fish. (Default: 30) </blockquote>
 *  -s, --num_sharks 
-<blockquote> Number of sharks. (Default: 10) </blockquote>
+<blockquote> Number of sharks. (Default: 20) </blockquote>
 * -fps, --framerate 
 <blockquote> Framerate (Default: 10) </blockquote>
