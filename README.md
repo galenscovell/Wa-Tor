@@ -23,7 +23,7 @@ Arguments:
 *  -c, --num_chronons 
 <blockquote> Runtime length. (Default: 1000) </blockquote>
 *  -f, --num_fish 
-<blockquote> Number of fish. (Default: 30) </blockquote>
+<blockquote> Number of fish. (Default: 80) </blockquote>
 *  -s, --num_sharks 
 <blockquote> Number of sharks. (Default: 20) </blockquote>
 * -fps, --framerate 
