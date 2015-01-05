@@ -4,17 +4,17 @@ Wa-Tor
 Population Dynamics Simulation created in Python. 
 Lots of fun to design and lots of fun to watch! :]
 
-Description:
+<b>Description:</b>
 <blockquote>Wa-Tor is a population dynamics simulation devised by Alexander Keewatin Dewdney and presented in the December 1984 issue of Scientific American in a 5-page article entitled "Computer Recreations: Sharks and fish wage an ecological war on the toroidal planet Wa-Tor".</blockquote>
 
 <blockquote>Wa-Tor is usually implemented as a 2-dimensional grid with 3 colours, one for fish, one for sharks and one for empty water. If a creature moves past the edge of the grid, it reappears on the opposite side. The sharks are predatory and eat the fish. Both sharks and fish live, move, reproduce and die in Wa-Tor according to simple rules from which complex emergent behavior can be seen to arise.</blockquote>
 
 
-Requirements:
+<b>Requirements:</b>
 * Python 3.4
 * PyGame 1.9.2a0
 
-Usage: 
+<b>Usage:</b> 
 <blockquote><b>python wator.py</b> [ -h ] [ -c ] [ -f ] [ -s ] [ -fps ]</blockquote>
 
 Arguments:
