@@ -2,9 +2,7 @@
 from creature import Creature
 from fish import Fish
 from shark import Shark
-import random
-import pygame
-import argparse
+import pygame, random, argparse, sys
 
 
 # Color setup
@@ -13,15 +11,13 @@ OCEAN      = ( 47,  47,  49)
 FISH       = ( 34, 168, 109)
 SHARK      = (233, 110,  68)
 
-# Window settings
-pygame.init()
+# Constant setup
 CELLSIZE = 9
 MARGIN = 1
 HEIGHT = 50
 WIDTH = 50
-screen_size = [500, 500]
-screen = pygame.display.set_mode(screen_size)
-pygame.display.set_caption("Population Dynamics | Wa-Tor")
+WINDOW_X = 500
+WINDOW_Y = 500
 
 
 class World:
@@ -41,7 +37,7 @@ class World:
             grid[x][y] = 2
             shark = Shark(x, y)
 
-    def updateWorld(self, grid):
+    def updateWorld(self, grid, screen):
         for y in range(0, HEIGHT):
             for x in range(0, WIDTH):
                 if grid[y][x] == 1:
@@ -68,6 +64,11 @@ class World:
 
 def main(args):
 
+    # Pygame initial setup
+    pygame.init()
+    screen = pygame.display.set_mode((WINDOW_X, WINDOW_Y))
+    pygame.display.set_caption("Population Dynamics | Wa-Tor")
+
     world = World()
     clock = pygame.time.Clock()
     chronons = args.num_chronons
@@ -93,14 +94,14 @@ def main(args):
         if chronons > 0:
             for creature in Creature.instances:
                 creature.check_status(new_world)
-            world.updateWorld(new_world)
+            world.updateWorld(new_world, screen)
             chronons -= 1
 
         pygame.display.flip()
         clock.tick(args.framerate)
 
     pygame.quit()
-    quit()
+    sys.exit()
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
