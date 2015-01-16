@@ -23,7 +23,7 @@ WINDOW_Y = 500
 class World:
     'The torus-shaped world of Wa-Tor'
 
-    def spawnCreature(self, grid, creature_type):
+    def spawn_creature(self, grid, creature_type):
         spawned = False
         while spawned == False:
             x = random.randint(0, HEIGHT - 1)
@@ -37,7 +37,7 @@ class World:
             grid[x][y] = 2
             shark = Shark(x, y)
 
-    def updateWorld(self, grid, screen):
+    def update_world(self, grid, screen):
         for y in range(0, HEIGHT):
             for x in range(0, WIDTH):
                 if grid[y][x] == 1:
@@ -51,7 +51,7 @@ class World:
                     (MARGIN + CELLSIZE) * y + MARGIN, 
                     CELLSIZE, CELLSIZE])
 
-    def createWorld(self):
+    def create_world(self):
         grid = []
         for y in range(0, HEIGHT):
             grid.append([])
@@ -76,11 +76,11 @@ def main(args):
     world_created = False
     while not world_created:
         screen.fill(BACKGROUND)
-        new_world = world.createWorld()
+        new_world = world.create_world()
         for f in range(args.num_fish):
-                world.spawnCreature(new_world, "fish")
+                world.spawn_creature(new_world, "fish")
         for s in range(args.num_sharks):
-                world.spawnCreature(new_world, "shark")
+                world.spawn_creature(new_world, "shark")
         world_created = True
 
     running = True
@@ -94,7 +94,7 @@ def main(args):
         if chronons > 0:
             for creature in Creature.instances:
                 creature.check_status(new_world)
-            world.updateWorld(new_world, screen)
+            world.update_world(new_world, screen)
             chronons -= 1
 
         pygame.display.flip()
