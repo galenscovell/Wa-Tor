@@ -14,16 +14,17 @@ SHARK      = (233, 110,  68)
 # Constant setup
 CELLSIZE = 9
 MARGIN = 1
-HEIGHT = 50
-WIDTH = 50
-WINDOW_X = 500
-WINDOW_Y = 500
+HEIGHT = 40
+WIDTH = 60
+WINDOW_X = 600
+WINDOW_Y = 400
 
 
 class World:
-    'The torus-shaped world of Wa-Tor'
-
+    """The torus-shaped world of Wa-Tor."""
+    
     def spawn_creature(self, grid, creature_type):
+        """Randomly choose beginning location of creatures."""
         spawned = False
         while spawned == False:
             x = random.randint(0, HEIGHT - 1)
@@ -38,6 +39,7 @@ class World:
             shark = Shark(x, y)
 
     def update_world(self, grid, screen):
+        """At end of every chronon, redraw updated locations."""
         for y in range(0, HEIGHT):
             for x in range(0, WIDTH):
                 if grid[y][x] == 1:
@@ -52,6 +54,7 @@ class World:
                     CELLSIZE, CELLSIZE])
 
     def create_world(self):
+        """Initial setup for world grid."""
         grid = []
         for y in range(0, HEIGHT):
             grid.append([])
@@ -63,8 +66,7 @@ class World:
 
 
 def main(args):
-
-    # Pygame initial setup
+    # Pygame initialize
     pygame.init()
     screen = pygame.display.set_mode((WINDOW_X, WINDOW_Y))
     pygame.display.set_caption("Population Dynamics | Wa-Tor")
@@ -73,6 +75,7 @@ def main(args):
     clock = pygame.time.Clock()
     chronons = args.num_chronons
 
+    # World creation
     world_created = False
     while not world_created:
         screen.fill(BACKGROUND)
@@ -83,6 +86,7 @@ def main(args):
                 world.spawn_creature(new_world, "shark")
         world_created = True
 
+    # Main simulation loop
     running = True
     while running:
         for event in pygame.event.get():
@@ -104,6 +108,7 @@ def main(args):
     sys.exit()
 
 def parse_arguments():
+    """Setup argument parser for user-edited simulation."""
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
     parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 1000)", default = 1000, type = int)
     parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 80)", default = 80, type = int)

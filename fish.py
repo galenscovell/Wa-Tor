@@ -2,7 +2,7 @@
 from creature import Creature
 
 class Fish(Creature):
-    'Peaceful denizens of Wa-Tor'
+    """Peaceful denizens of Wa-Tor."""
 
     def __init__(self, x, y):
         self.handler = 1

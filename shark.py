@@ -2,7 +2,7 @@
 from creature import Creature
 
 class Shark(Creature):
-    'Predators of Wa-Tor'
+    """Predators of Wa-Tor."""
 
     def __init__(self, x, y):
         self.handler = 2

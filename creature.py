@@ -1,13 +1,19 @@
 
 import random
-HEIGHT = 50
-WIDTH = 50
+HEIGHT = 40
+WIDTH = 60
 
 class Creature():
-    'Base class for all creatures of Wa-tor'
+    """Base class for all creatures of Wa-tor."""
     instances = []
 
     def check_adjacent_cells(self, grid):
+        """
+        Create dictionary of all adjacent cells contents, 
+            adjusting for horizontal wrap-around.
+        Cells outside of vertical height are thrown out.
+        Dictionary contents are either 0 (empty), 1(fish) or 2(shark).
+        """
         results = {}
         for x, y in [(self.x + i, self.y + j) for i in (-1, 0, 1) for j in (-1, 0, 1) if i != 0 or j != 0]:
                 if (0 <= x < HEIGHT):
@@ -20,6 +26,18 @@ class Creature():
         return results
 
     def movement(self, grid):
+        """
+        Using results from check_adjacent_cells, have creatures
+            respond to environment.
+        Sharks do not move to other shark spaces. If there are nearby
+            fish, shark randomly selects one to pursue. Sharks gain
+            energy and libido when they eat a fish.
+        Fish randomly choose move based on adjacent free spaces.
+        If there are no empty adjacent spaces, no movement occurs.
+
+        If creature libido >= 12, new creature of same 
+            type is spawned in their old space.
+        """
         moved = False
         open_spaces = self.check_adjacent_cells(grid)
 
@@ -55,6 +73,7 @@ class Creature():
             moved = True
 
     def check_status(self, grid):
+        """Check energy at beginning of chronon for death event."""
         # Check each shark status
         if self.__class__.__name__ == 'Shark':
             if self.energy <= 0:
