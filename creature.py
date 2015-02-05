@@ -9,8 +9,8 @@ class Creature():
 
     def check_adjacent_cells(self, grid):
         """
-        Create dictionary of all adjacent cells contents, adjusting 
-            for horizontal wrap-around.
+        Create dictionary of all adjacent cells contents, 
+        adjusting for horizontal wrap-around.
         Cells outside of vertical height are thrown out.
         Dictionary contents are either 0 (empty), 1 (fish) or 2 (shark).
         """
@@ -27,16 +27,15 @@ class Creature():
 
     def movement(self, grid):
         """
-        Using results from check_adjacent_cells, have creatures
-            respond to environment.
-        Sharks do not move to other shark spaces. If there are nearby
-            fish, shark randomly selects one to pursue. Sharks gain
-            energy and libido when they eat a fish.
+        Using results from check_adjacent_cells, 
+        have creaturesrespond to environment.
+        Sharks do not move to other shark spaces. 
+        If there are nearby fish, shark randomly selects one to pursue. 
+        Sharks gain energy and libido when they eat a fish.
         Fish randomly choose move based on adjacent free spaces.
         If there are no empty adjacent spaces, no movement occurs.
-
         If creature libido >= 12, new creature of same type is 
-            spawned in their old space.
+        spawned in their old space.
         """
         moved = False
         open_spaces = self.check_adjacent_cells(grid)
