@@ -9,10 +9,10 @@ class Creature():
 
     def check_adjacent_cells(self, grid):
         """
-        Create dictionary of all adjacent cells contents, 
-            adjusting for horizontal wrap-around.
+        Create dictionary of all adjacent cells contents, adjusting 
+            for horizontal wrap-around.
         Cells outside of vertical height are thrown out.
-        Dictionary contents are either 0 (empty), 1(fish) or 2(shark).
+        Dictionary contents are either 0 (empty), 1 (fish) or 2 (shark).
         """
         results = {}
         for x, y in [(self.x + i, self.y + j) for i in (-1, 0, 1) for j in (-1, 0, 1) if i != 0 or j != 0]:
@@ -35,8 +35,8 @@ class Creature():
         Fish randomly choose move based on adjacent free spaces.
         If there are no empty adjacent spaces, no movement occurs.
 
-        If creature libido >= 12, new creature of same 
-            type is spawned in their old space.
+        If creature libido >= 12, new creature of same type is 
+            spawned in their old space.
         """
         moved = False
         open_spaces = self.check_adjacent_cells(grid)
