@@ -13,6 +13,7 @@ Lots of fun to design and lots of fun to watch! :]
 <b>Requirements:</b>
 * Python 3.4
 * PyGame 1.9.2a0
+  <blockquote>Use the unofficial pygame build for Python 3.4 from here: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame</blockquote>
 
 <b>Usage:</b> 
 <blockquote><b>python wator.py</b> [ -h ] [ -c ] [ -f ] [ -s ] [ -fps ]</blockquote>
