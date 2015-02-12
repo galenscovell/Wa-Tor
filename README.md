@@ -1,4 +1,4 @@
-![alt tag](http://galenscovell.github.io/css/pics/wator.png)
+<img src='http://galenscovell.github.io/css/pics/wator.png' width=600px />
 
 Wa-Tor
 ======
