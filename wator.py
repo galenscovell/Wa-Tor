@@ -12,10 +12,10 @@ FISH       = ( 34, 168, 109)
 SHARK      = (233, 110,  68)
 
 # Constant setup
-CELLSIZE = 9
+CELLSIZE = 7
 MARGIN = 1
-HEIGHT = 40
-WIDTH = 60
+HEIGHT = 50
+WIDTH = 75
 WINDOW_X = 600
 WINDOW_Y = 400
 
@@ -111,8 +111,8 @@ def parse_arguments():
     """Setup argument parser for user-edited simulation."""
     parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
     parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 1000)", default = 1000, type = int)
-    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 80)", default = 80, type = int)
-    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 20)", default = 20, type = int)
+    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 120)", default = 120, type = int)
+    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 40)", default = 40, type = int)
     parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 10)", default = 10, type = int)
     args = parser.parse_args()
     return args

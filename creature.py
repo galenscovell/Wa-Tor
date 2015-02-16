@@ -1,7 +1,7 @@
 
 import random
-HEIGHT = 40
-WIDTH = 60
+HEIGHT = 50
+WIDTH = 75
 
 class Creature():
     """Base class for all creatures of Wa-tor."""
@@ -34,7 +34,7 @@ class Creature():
         Sharks gain energy and libido when they eat a fish.
         Fish randomly choose move based on adjacent free spaces.
         If there are no empty adjacent spaces, no movement occurs.
-        If creature libido >= 12, new creature of same type is 
+        If creature libido >= 10, new creature of same type is 
         spawned in their old space.
         """
         moved = False
@@ -46,7 +46,7 @@ class Creature():
             if len(nearby_fish) > 0:
                 move_options = nearby_fish
                 self.energy += 1
-                self.libido += 1
+                self.libido += 0.5
             else:
                 move_options = [k for k,v in open_spaces.items() if v == 0]
 
@@ -87,6 +87,7 @@ class Creature():
             if grid[self.x][self.y] == 2:
                 Creature.instances.remove(self)
             else:
+                self.energy -= 1
                 self.libido += 3
                 self.movement(grid)
 
