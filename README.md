@@ -13,11 +13,11 @@ Lots of fun to design and lots of fun to watch! :]
 
 
 <b>Requirements:</b>
-* Python 3.4
+* Python 3.5
 * PyGame 1.9.2a0
-  <blockquote>Use the unofficial pygame build for Python 3.4 from here: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame</blockquote>
+  <blockquote>Use the unofficial pygame build for Python 3.5 from here: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame</blockquote>
 
-<b>Installing Unofficial pygame for Python 3.4:</b>
+<b>Installing Unofficial pygame for Python 3.5:</b>
 * Save .whl file from above to somewhere you'll remember
 * Open a terminal
 * <blockquote>pip install wheel</blockquote>

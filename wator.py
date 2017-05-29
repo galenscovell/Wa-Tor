@@ -12,12 +12,12 @@ FISH       = ( 34, 168, 109)
 SHARK      = (233, 110,  68)
 
 # Constant setup
-CELLSIZE = 7
-MARGIN = 1
-HEIGHT = 50
-WIDTH = 75
-WINDOW_X = 600
-WINDOW_Y = 400
+CELLSIZE = 8
+MARGIN = 2
+WIDTH = 90
+HEIGHT = 60
+WINDOW_X = 900
+WINDOW_Y = 600
 
 
 class World:
@@ -26,7 +26,7 @@ class World:
     def spawn_creature(self, grid, creature_type):
         """Randomly choose beginning location of creatures."""
         spawned = False
-        while spawned == False:
+        while not spawned:
             x = random.randint(0, HEIGHT - 1)
             y = random.randint(0, WIDTH - 1)
             if grid[x][y] == 0:
@@ -81,9 +81,9 @@ def main(args):
         screen.fill(BACKGROUND)
         new_world = world.create_world()
         for f in range(args.num_fish):
-                world.spawn_creature(new_world, "fish")
+            world.spawn_creature(new_world, "fish")
         for s in range(args.num_sharks):
-                world.spawn_creature(new_world, "shark")
+            world.spawn_creature(new_world, "shark")
         world_created = True
 
     # Main simulation loop
@@ -107,15 +107,18 @@ def main(args):
     pygame.quit()
     sys.exit()
 
+
 def parse_arguments():
     """Setup argument parser for user-edited simulation."""
-    parser = argparse.ArgumentParser(description = "Wa-Tor: Population Dynamics Simulation")
-    parser.add_argument('-c', '--num_chronons', help = "Runtime length. (Default: 1000)", default = 1000, type = int)
-    parser.add_argument('-f', '--num_fish', help = "Number of fish. (Default: 120)", default = 120, type = int)
-    parser.add_argument('-s', '--num_sharks', help = "Number of sharks. (Default: 40)", default = 40, type = int)
-    parser.add_argument('-fps', '--framerate', help = "Framerate (Default: 10)", default = 10, type = int)
+    parser = argparse.ArgumentParser(description='Wa-Tor: Population Dynamics Simulation')
+    parser.add_argument('-c', '--num_chronons', help='Runtime length. (Default: 1000)', default=1000, type=int)
+    parser.add_argument('-f', '--num_fish', help='Number of fish. (Default: 120)', default=120, type=int)
+    parser.add_argument('-s', '--num_sharks', help='Number of sharks. (Default: 40)', default=40, type=int)
+    parser.add_argument('-fps', '--framerate', help='Framerate (Default: 20)', default=20, type=int)
     args = parser.parse_args()
     return args
 
-if __name__ == "__main__":
+
+
+if __name__ == '__main__':
     main(parse_arguments())
