@@ -23,6 +23,13 @@ class Creature():
                     elif y < 0:
                         y = WIDTH - 1
                     results[x,y] = grid[x][y]
+                elif 0 <= y < WIDTH:                                                
+                # Allow wrap-around on vertical axis                            
+                    if x == HEIGHT:                                                 
+                        x = 0                                                       
+                    elif x < 0:                                                     
+                        x = HEIGHT -1                                               
+                    results[x, y] = grid[x][y]
         return results
 
     def movement(self, grid):
